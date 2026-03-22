@@ -1,0 +1,124 @@
+/* animations.css — Transitions, spinner, typewriter, fadeIn */
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInFast {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulseGold {
+  0%, 100% { color: var(--color-xp-gold); }
+  50%       { color: #fff; }
+}
+
+@keyframes blinkCursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-6px); }
+  40%       { transform: translateX(6px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
+}
+
+@keyframes flashRed {
+  0%   { background: rgba(244, 71, 71, 0.25); }
+  100% { background: transparent; }
+}
+
+@keyframes flashGreen {
+  0%   { background: rgba(76, 175, 80, 0.35); }
+  100% { background: transparent; }
+}
+
+/* Typewriter cursor */
+.typewriter-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background: var(--color-text-primary);
+  animation: blinkCursor 1s step-end infinite;
+  vertical-align: text-bottom;
+  margin-left: 1px;
+}
+
+/* Animate new elements in */
+.animate-in {
+  animation: fadeIn 200ms ease both;
+}
+
+.animate-slide {
+  animation: slideInLeft 200ms ease both;
+}
+
+/* Score pop */
+.score-pop {
+  animation: pulseGold 600ms ease;
+}
+
+/* Shake on wrong */
+.shake {
+  animation: shake 350ms ease;
+}
+
+/* Flash row feedback */
+.flash-wrong {
+  animation: flashRed 700ms ease forwards;
+}
+
+.flash-right {
+  animation: flashGreen 700ms ease forwards;
+}
+
+/* XP bar gain pulse */
+.xp-bar-fill.gaining {
+  animation: pulseGold 400ms ease;
+}
+
+/* Chapter unlock fanfare */
+.chapter-unlock {
+  animation: fadeIn 500ms ease both;
+}
+
+/* Execute button spinning */
+@keyframes executeSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.spinner-ring {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-success);
+  border-radius: 50%;
+  animation: executeSpin 500ms linear infinite;
+  vertical-align: middle;
+}
+
+/* Timer urgency pulse */
+@keyframes timerUrgent {
+  0%, 100% { color: var(--color-error); }
+  50%       { color: #ff8888; }
+}
+
+.timer-urgent {
+  animation: timerUrgent 500ms ease infinite;
+}

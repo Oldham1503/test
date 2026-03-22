@@ -1,0 +1,83 @@
+/* theme.css — SSMS-derived design tokens */
+
+:root {
+  /* Backgrounds */
+  --color-bg-primary:    #1e1e1e;
+  --color-bg-secondary:  #252526;
+  --color-bg-tertiary:   #2d2d30;
+  --color-bg-elevated:   #333337;
+  --color-bg-hover:      #3e3e40;
+
+  /* Borders */
+  --color-border:        #3f3f46;
+  --color-border-accent: #007acc;
+
+  /* Text */
+  --color-text-primary:   #d4d4d4;
+  --color-text-secondary: #9d9d9d;
+  --color-text-muted:     #6d6d6d;
+
+  /* SQL Syntax Colors */
+  --color-kw:       #569cd6;   /* keywords */
+  --color-str:      #ce9178;   /* strings */
+  --color-num:      #b5cea8;   /* numbers */
+  --color-fn:       #dcdcaa;   /* functions */
+  --color-type:     #4ec9b0;   /* types */
+  --color-comment:  #6a9955;   /* comments */
+
+  /* Semantic */
+  --color-success:  #4caf50;
+  --color-warning:  #ff9800;
+  --color-error:    #f44747;
+  --color-xp-gold:  #ffd700;
+  --color-blue:     #007acc;
+
+  /* Difficulty */
+  --color-beginner:     #4caf50;
+  --color-intermediate: #ff9800;
+  --color-advanced:     #f44747;
+
+  /* Fonts */
+  --font-mono: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
+  --font-ui:   'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  /* Sizes */
+  --titlebar-height:  32px;
+  --statusbar-height: 24px;
+  --sidebar-width:    220px;
+  --sidebar-collapsed: 0px;
+
+  /* Transitions */
+  --transition-fast:   120ms ease;
+  --transition-medium: 250ms ease;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+/* SQL Syntax span classes */
+.kw   { color: var(--color-kw); }
+.str  { color: var(--color-str); }
+.num  { color: var(--color-num); }
+.fn   { color: var(--color-fn); }
+.type { color: var(--color-type); }
+.cmt  { color: var(--color-comment); font-style: italic; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--color-bg-secondary); }
+::-webkit-scrollbar-thumb { background: var(--color-bg-elevated); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-border); }

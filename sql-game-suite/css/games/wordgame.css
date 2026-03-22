@@ -1,0 +1,217 @@
+/* wordgame.css */
+
+.wordgame-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-tertiary);
+  flex-shrink: 0;
+}
+
+.wordgame-tab {
+  padding: 6px 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  border: none;
+  background: none;
+  border-bottom: 2px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.wordgame-tab.active {
+  color: var(--color-text-primary);
+  border-bottom-color: var(--color-border-accent);
+  background: var(--color-bg-primary);
+}
+
+.wordgame-tab:hover:not(.active) {
+  color: var(--color-text-primary);
+  background: var(--color-bg-hover);
+}
+
+/* ===  HANGMAN === */
+
+.hangman-layout {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.hangman-main {
+  flex: 1;
+  min-width: 280px;
+}
+
+.hangman-errors {
+  width: 300px;
+  min-width: 260px;
+}
+
+/* Error log display */
+.error-log {
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  padding: 10px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  min-height: 140px;
+  line-height: 1.9;
+}
+
+.error-log-entry {
+  color: var(--color-error);
+  animation: slideInLeft 200ms ease;
+}
+
+.error-log-empty {
+  color: var(--color-text-muted);
+}
+
+/* Word display */
+.hangman-word {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+  justify-content: center;
+}
+
+.hangman-letter {
+  width: 28px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 700;
+  border-bottom: 2px solid var(--color-border-accent);
+  padding-bottom: 2px;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  min-height: 30px;
+  line-height: 30px;
+}
+
+.hangman-letter.revealed { color: var(--color-kw); }
+.hangman-letter.wrong    { color: var(--color-error); border-bottom-color: var(--color-error); }
+
+/* Keyboard */
+.hangman-keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  max-width: 340px;
+}
+
+.key-btn {
+  width: 30px;
+  height: 30px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-transform: uppercase;
+}
+
+.key-btn:hover:not(:disabled) {
+  background: var(--color-bg-hover);
+  border-color: var(--color-kw);
+  color: var(--color-kw);
+}
+
+.key-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.key-btn.correct {
+  background: rgba(76, 175, 80, 0.2);
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+.key-btn.wrong {
+  background: rgba(244, 71, 71, 0.15);
+  border-color: rgba(244, 71, 71, 0.3);
+  color: var(--color-error);
+}
+
+/* Definition */
+.hangman-definition {
+  background: var(--color-bg-secondary);
+  border-left: 3px solid var(--color-comment);
+  padding: 10px 14px;
+  margin-top: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-comment);
+  line-height: 1.6;
+  animation: fadeIn 300ms ease;
+}
+
+/* === WORD SEARCH === */
+
+.wordsearch-layout {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.wordsearch-grid-container {
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.ws-grid {
+  display: inline-grid;
+  gap: 1px;
+  background: var(--color-border);
+  border: 1px solid var(--color-border);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ws-cell {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-primary);
+  cursor: pointer;
+  color: var(--color-text-primary);
+  transition: background var(--transition-fast), color var(--transition-fast);
+  text-transform: uppercase;
+}
+
+.ws-cell:hover { background: var(--color-bg-hover); }
+.ws-cell.highlighted { background: rgba(0, 122, 204, 0.2); color: var(--color-kw); }
+.ws-cell.selected    { background: rgba(0, 122, 204, 0.4) !important; }
+.ws-cell.found       { background: rgba(76, 175, 80, 0.2); color: var(--color-success); cursor: default; }
+
+/* Word list panel */
+.wordsearch-words {
+  min-width: 160px;
+}
+
+.ws-word-item {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 4px 0;
+  color: var(--color-text-primary);
+  border-bottom: 1px dotted var(--color-border);
+  transition: color var(--transition-fast);
+}
+
+.ws-word-item.found {
+  color: var(--color-success);
+  text-decoration: line-through;
+  opacity: 0.6;
+}

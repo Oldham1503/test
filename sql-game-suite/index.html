@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Game Suite</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/games/quiz.css">
+  <link rel="stylesheet" href="css/games/puzzle.css">
+  <link rel="stylesheet" href="css/games/wordgame.css">
+  <link rel="stylesheet" href="css/games/escape.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SPLASH SCREEN
+════════════════════════════════════════════════════════════ -->
+<div id="splash">
+  <div id="connect-dialog">
+    <div class="dialog-title">Connect to Server</div>
+    <div class="dialog-row"><label>Server type:</label><span class="dialog-value">Database Engine</span></div>
+    <div class="dialog-row"><label>Server name:</label><span class="dialog-value">SQL_GAME_SUITE</span></div>
+    <div class="dialog-row"><label>Authentication:</label><span class="dialog-value">DBA Mode</span></div>
+    <div class="dialog-row"><label>Login:</label><span class="dialog-value">sa (you)</span></div>
+    <div style="margin-top:16px;text-align:right">
+      <button class="btn btn-primary" onclick="document.getElementById('connect-dialog').remove()">Connect</button>
+    </div>
+  </div>
+  <div class="splash-logo">SQL Game Suite</div>
+  <div class="splash-sub">v1.0 — SQL Server Management Studio Edition</div>
+  <div class="splash-status" id="splash-status">Initializing...</div>
+  <div class="splash-progress-track">
+    <div class="splash-progress-fill" id="splash-fill"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODAL
+════════════════════════════════════════════════════════════ -->
+<div id="modal-overlay">
+  <div id="modal-box">
+    <div id="modal-titlebar">
+      <span id="modal-title">Message</span>
+      <button id="modal-close" title="Close">×</button>
+    </div>
+    <div id="modal-body"></div>
+    <div id="modal-actions"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MAIN APP SHELL
+════════════════════════════════════════════════════════════ -->
+<div id="app">
+
+  <!-- TITLE BAR -->
+  <div id="titlebar">
+    <span class="app-title">SQL Game Suite.exe</span>
+    <span class="title-spacer"></span>
+    <div class="title-meta">
+      <span id="titlebar-rank">Junior DBA (Intern)</span>
+      <span class="session-xp" id="titlebar-xp">0 XP</span>
+    </div>
+  </div>
+
+  <!-- MAIN AREA -->
+  <div id="main-area">
+
+    <!-- SIDEBAR / OBJECT EXPLORER -->
+    <div id="sidebar">
+      <div id="sidebar-header">Object Explorer</div>
+      <div id="sidebar-tree">
+        <div class="tree-root">
+          <div class="tree-root-label">▼ 🗄 SQL Game Suite</div>
+        </div>
+        <div class="tree-game" data-game="menu">🏠 Main Menu</div>
+        <div class="tree-game" data-game="quiz">
+          📊 Quiz Trivia
+          <span class="game-score" id="sidebar-quiz-score">—</span>
+        </div>
+        <div class="tree-game" data-game="puzzle">
+          🔧 SQL Puzzles
+          <span class="game-score" id="sidebar-puzzle-score">—</span>
+        </div>
+        <div class="tree-game" data-game="word">
+          🔤 Word Games
+          <span class="game-score" id="sidebar-word-score">—</span>
+        </div>
+        <div class="tree-game" data-game="escape">
+          🚨 Escape Room
+          <span class="game-score" id="sidebar-escape-score">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div id="content">
+
+      <!-- ═════════════════════════════════════════════════
+           SECTION: MENU
+      ══════════════════════════════════════════════════ -->
+      <section id="section-menu" class="game-section">
+        <div class="tab-bar">
+          <div class="tab active">Start.sql</div>
+        </div>
+        <div class="game-body">
+          <div class="quiz-header">
+            <span class="cmt">-- SELECT a game to begin</span><br>
+            <span class="cmt">-- All games share a session XP pool. Good luck, DBA.</span>
+          </div>
+
+          <div class="menu-grid">
+            <div class="menu-card" data-game="quiz">
+              <div class="menu-card-icon">📊</div>
+              <div class="menu-card-name">Quiz Trivia</div>
+              <div class="menu-card-desc">10 questions per round on SQL concepts, syntax, and performance. Three difficulty levels.</div>
+              <div class="menu-card-footer">
+                <span class="badge badge-beginner">SQL Trivia</span>
+                <button class="btn btn-execute">
+                  <span class="play-icon"></span> Execute
+                </button>
+              </div>
+            </div>
+
+            <div class="menu-card" data-game="puzzle">
+              <div class="menu-card-icon">🔧</div>
+              <div class="menu-card-name">SQL Puzzles</div>
+              <div class="menu-card-desc">Fix broken queries, fill in the blanks, and match result sets. 5 challenges.</div>
+              <div class="menu-card-footer">
+                <span class="badge badge-intermediate">Challenges</span>
+                <button class="btn btn-execute">
+                  <span class="play-icon"></span> Execute
+                </button>
+              </div>
+            </div>
+
+            <div class="menu-card" data-game="word">
+              <div class="menu-card-icon">🔤</div>
+              <div class="menu-card-name">Word Games</div>
+              <div class="menu-card-desc">SQL Hangman with error log drama, and a 15×15 word search grid.</div>
+              <div class="menu-card-footer">
+                <span class="badge badge-beginner">Vocabulary</span>
+                <button class="btn btn-execute">
+                  <span class="play-icon"></span> Execute
+                </button>
+              </div>
+            </div>
+
+            <div class="menu-card" data-game="escape">
+              <div class="menu-card-icon">🚨</div>
+              <div class="menu-card-name">Escape Room</div>
+              <div class="menu-card-desc">Called in at 2:47 AM — production is down. 5 chapters of DBA crisis management.</div>
+              <div class="menu-card-footer">
+                <span class="badge badge-advanced">Story Mode</span>
+                <button class="btn btn-execute">
+                  <span class="play-icon"></span> Execute
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- XP Bar -->
+          <div style="max-width:700px;margin:24px auto 0">
+            <div class="xp-bar-container">
+              <div class="xp-bar-label">
+                <span id="menu-xp-label">Junior DBA (Intern) — 0 / 500 XP</span>
+              </div>
+              <div class="xp-bar-track">
+                <div class="xp-bar-fill" id="menu-xp-fill" style="width:0%"></div>
+              </div>
+            </div>
+
+            <div style="margin-top:20px">
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+                <span class="text-mono text-dim">-- Difficulty:</span>
+                <div class="difficulty-selector">
+                  <button class="difficulty-option" data-diff="beginner">Beginner</button>
+                  <button class="difficulty-option selected-intermediate" data-diff="intermediate">Intermediate</button>
+                  <button class="difficulty-option" data-diff="advanced">Advanced</button>
+                </div>
+              </div>
+              <div class="text-mono text-dim" style="font-size:10px">-- Applies to Quiz Trivia and Hangman word selection</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════════════════════════════════════════════════
+           SECTION: QUIZ
+      ══════════════════════════════════════════════════ -->
+      <section id="section-quiz" class="game-section">
+        <div class="tab-bar">
+          <div class="tab active" onclick="App.navigateTo('menu')" style="cursor:pointer">Start.sql</div>
+          <div class="tab active" style="color:var(--color-text-primary)">Quiz.sql ×</div>
+        </div>
+        <div class="toolbar">
+          <button class="btn btn-execute" id="quiz-exec-btn" onclick="QuizGame.startRound()">
+            <span class="play-icon"></span> Execute (F5)
+          </button>
+          <div class="toolbar-sep"></div>
+          <span class="text-mono text-dim" style="font-size:11px">-- 10 questions per round</span>
+        </div>
+
+        <!-- QUIZ START -->
+        <div class="game-body" id="quiz-start">
+          <div class="quiz-start">
+            <div class="section-header">
+              <span class="section-title">Quiz.sql — SQL Trivia</span>
+              <span id="quiz-q-diff" class="badge badge-intermediate">intermediate</span>
+            </div>
+            <div class="quiz-header intro-sql">
+              <span class="cmt">-- Ready to test your SQL knowledge?</span><br>
+              <span class="kw">SELECT</span> * <span class="kw">FROM</span> YourBrain<br>
+              <span class="kw">WHERE</span> topic = <span class="str">'SQL'</span><br>
+              <span class="kw">ORDER BY</span> difficulty <span class="kw">ASC</span><span class="cmt">; -- start easy</span>
+            </div>
+            <ul class="quiz-rules">
+              <li>10 questions drawn from the selected difficulty tier</li>
+              <li>30-second timer per question — faster = more XP</li>
+              <li>Correct streak multiplies your bonus</li>
+              <li>Each question shows an explanation after answering</li>
+            </ul>
+            <button class="btn btn-primary" onclick="QuizGame.startRound()">
+              ▶ Start Round
+            </button>
+          </div>
+        </div>
+
+        <!-- QUIZ GAME (hidden until started) -->
+        <div style="display:none;flex:1;flex-direction:column;overflow:hidden" id="quiz-game">
+          <div class="game-body" style="flex:1;overflow-y:auto">
+            <div id="quiz-timer-bar" class="quiz-timer-bar"></div>
+            <div class="quiz-header" id="quiz-q-num">-- QUESTION 1 of 10</div>
+            <div class="quiz-question-block">
+              <div class="q-label cmt" id="quiz-q-num2"></div>
+              <div class="q-text" id="quiz-q-text"></div>
+            </div>
+            <table class="quiz-choices-table">
+              <thead>
+                <tr>
+                  <th style="width:40px">Row</th>
+                  <th>Answer</th>
+                </tr>
+              </thead>
+              <tbody id="quiz-choices-body"></tbody>
+            </table>
+            <div class="quiz-explanation" id="quiz-explanation" style="display:none"></div>
+          </div>
+        </div>
+
+        <!-- QUIZ SUMMARY (hidden until done) -->
+        <div style="display:none" id="quiz-summary" class="game-body">
+          <div class="quiz-summary animate-in">
+            <div class="section-header">
+              <span class="section-title">-- Round Complete</span>
+            </div>
+            <div class="text-center mb-16">
+              <div class="score-big" id="quiz-sum-score">0</div>
+              <div class="text-dim">Points Earned</div>
+            </div>
+            <div class="summary-stat">
+              <span class="summary-stat-label">Correct Answers</span>
+              <span class="summary-stat-value" id="quiz-sum-correct">—</span>
+            </div>
+            <div class="summary-stat">
+              <span class="summary-stat-label">Best Streak</span>
+              <span class="summary-stat-value" id="quiz-sum-streak">—</span>
+            </div>
+            <div class="summary-stat">
+              <span class="summary-stat-label">XP Earned</span>
+              <span class="summary-stat-value gold" id="quiz-sum-xp">—</span>
+            </div>
+            <div class="flex gap-8 mt-16">
+              <button class="btn btn-primary" onclick="QuizGame.startRound()">▶ Play Again</button>
+              <button class="btn btn-ghost" onclick="App.navigateTo('menu')">← Main Menu</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════════════════════════════════════════════════
+           SECTION: PUZZLE
+      ══════════════════════════════════════════════════ -->
+      <section id="section-puzzle" class="game-section">
+        <div class="tab-bar">
+          <div class="tab" onclick="App.navigateTo('menu')" style="cursor:pointer">Start.sql</div>
+          <div class="tab active">Puzzle.sql ×</div>
+        </div>
+
+        <!-- Puzzle List View -->
+        <div id="puzzle-list-view" class="game-body">
+          <div class="section-header">
+            <span class="section-title">Puzzle.sql — SQL Challenges</span>
+            <span class="text-dim text-mono">5 puzzles</span>
+          </div>
+          <div class="quiz-header mb-16">
+            <span class="cmt">-- Fix bugs, fill blanks, match result sets</span>
+          </div>
+          <div class="puzzle-list" id="puzzle-cards"></div>
+        </div>
+
+        <!-- Puzzle Play View -->
+        <div id="puzzle-play-view" style="display:none;flex:1;flex-direction:column;height:100%;overflow:hidden">
+          <div class="toolbar">
+            <button class="btn btn-ghost btn-sm" onclick="PuzzleGame.onEnter()">← Back</button>
+            <div class="toolbar-sep"></div>
+            <span class="text-mono" id="puzzle-play-title" style="font-size:12px;color:var(--color-text-primary)"></span>
+            <span class="badge" id="puzzle-play-type" style="margin-left:6px"></span>
+            <div class="toolbar-sep"></div>
+            <button class="btn btn-execute" id="puzzle-exec-btn">
+              <span class="play-icon"></span> Execute (F5)
+            </button>
+          </div>
+
+          <div class="puzzle-layout" style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+            <!-- Description -->
+            <div style="padding:8px 14px;background:var(--color-bg-secondary);border-bottom:1px solid var(--color-border);font-size:12px;color:var(--color-text-secondary)" id="puzzle-play-desc"></div>
+
+            <!-- Editor pane -->
+            <div class="puzzle-pane-editor">
+              <div class="pane-label">Query Editor</div>
+              <div class="puzzle-editor-area" id="puzzle-editor-area"></div>
+            </div>
+
+            <!-- Hint area -->
+            <div class="hint-area" id="puzzle-hint-area" style="display:none"></div>
+
+            <!-- Results pane -->
+            <div class="pane-label" style="border-top:1px solid var(--color-border)">Results</div>
+            <div class="puzzle-pane-results" id="puzzle-results-pane"></div>
+
+            <!-- Messages pane -->
+            <div class="puzzle-pane-messages" id="puzzle-messages-pane">-- Ready</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════════════════════════════════════════════════
+           SECTION: WORD GAME
+      ══════════════════════════════════════════════════ -->
+      <section id="section-word" class="game-section">
+        <div class="tab-bar">
+          <div class="tab" onclick="App.navigateTo('menu')" style="cursor:pointer">Start.sql</div>
+          <div class="tab active">WordGame.sql ×</div>
+        </div>
+
+        <!-- Sub-game tabs -->
+        <div class="wordgame-tabs">
+          <button class="wordgame-tab active" data-tab="hangman" onclick="WordGame.switchTab('hangman')">Hangman</button>
+          <button class="wordgame-tab" data-tab="wordsearch" onclick="WordGame.switchTab('wordsearch')">Word Search</button>
+        </div>
+
+        <div class="game-body">
+          <div class="quiz-header mb-16">
+            <span class="cmt">-- Guess SQL terms | Find SQL keywords in the grid</span>
+          </div>
+          <!-- Hangman Panel -->
+          <div id="hangman-panel"></div>
+          <!-- Word Search Panel -->
+          <div id="wordsearch-panel" style="display:none"></div>
+        </div>
+      </section>
+
+      <!-- ═════════════════════════════════════════════════
+           SECTION: ESCAPE ROOM
+      ══════════════════════════════════════════════════ -->
+      <section id="section-escape" class="game-section">
+        <div class="tab-bar">
+          <div class="tab" onclick="App.navigateTo('menu')" style="cursor:pointer">Start.sql</div>
+          <div class="tab active">EscapeRoom.sql ×</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;overflow:hidden" id="escape-panel"></div>
+      </section>
+
+    </div><!-- /#content -->
+  </div><!-- /#main-area -->
+
+  <!-- STATUS BAR -->
+  <div id="statusbar">
+    <div class="status-item">🔗 Connected to: SQL_GAME_SUITE</div>
+    <div class="status-item">Difficulty: <strong id="status-difficulty">Intermediate</strong></div>
+    <div class="status-spacer"></div>
+    <div class="status-item">XP: <span id="status-xp">0</span></div>
+    <div class="status-item">⏱ <span id="status-timer">00:00</span></div>
+  </div>
+
+</div><!-- /#app -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     JAVASCRIPT — ORDER MATTERS
+════════════════════════════════════════════════════════════ -->
+<script src="js/core/storage.js"></script>
+<script src="js/core/score.js"></script>
+<script src="js/core/timer.js"></script>
+<script src="js/core/modal.js"></script>
+<script src="js/data/quiz-questions.js"></script>
+<script src="js/data/puzzle-data.js"></script>
+<script src="js/data/wordgame-data.js"></script>
+<script src="js/data/escape-chapters.js"></script>
+<script src="js/games/quiz.js"></script>
+<script src="js/games/puzzle.js"></script>
+<script src="js/games/wordgame.js"></script>
+<script src="js/games/escape.js"></script>
+<script src="js/core/app.js"></script>
+
+</body>
+</html>
